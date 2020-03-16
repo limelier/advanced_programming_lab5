@@ -24,4 +24,8 @@ public class Document implements Serializable {
     public String getId() {
         return id;
     }
+
+    public String getLocation() {
+        return location;
+    }
 }
