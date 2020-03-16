@@ -20,4 +20,8 @@ public class Document implements Serializable {
     public void addTag(String key, Object obj) {
         tags.put(key, obj);
     }
+
+    public String getId() {
+        return id;
+    }
 }
