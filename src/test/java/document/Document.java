@@ -1,9 +1,10 @@
 package document;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Document {
+public class Document implements Serializable {
     private String id;
     private String name;
     private String location;
