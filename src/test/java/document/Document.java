@@ -15,4 +15,8 @@ public class Document {
         this.location = location;
         tags = new HashMap<>();
     }
+
+    public void addTag(String key, Object obj) {
+        tags.put(key, obj);
+    }
 }
