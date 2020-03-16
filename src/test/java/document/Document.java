@@ -1,10 +1,18 @@
 package document;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class Document {
-    String id;
-    String name;
-    String path;
-    Map<String, String> tags;
+    private String id;
+    private String name;
+    private String location;
+    Map<String, Object> tags;
+
+    public Document(String id, String name, String location) {
+        this.id = id;
+        this.name = name;
+        this.location = location;
+        tags = new HashMap<>();
+    }
 }
