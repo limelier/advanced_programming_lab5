@@ -3,7 +3,8 @@ package document;
 import java.util.Map;
 
 public class Document {
-    int id;
+    String id;
     String name;
+    String path;
     Map<String, String> tags;
 }
