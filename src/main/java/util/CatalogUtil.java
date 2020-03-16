@@ -9,6 +9,13 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 public class CatalogUtil {
+
+    /**
+     * Save the catalog at the location in its path.
+     *
+     * @param catalog the catalog to save
+     * @throws IOException the catalog's path was invalid
+     */
     public static void save(Catalog catalog) throws IOException {
         try (
                 ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(catalog.getPath()))
@@ -17,6 +24,14 @@ public class CatalogUtil {
         }
     }
 
+    /**
+     * Create a catalog, loading it from the given path.
+     *
+     * @param path the path to the serialized catalog object
+     * @return the loaded catalog
+     * @throws IOException the path is invalid
+     * @throws ClassNotFoundException the file at the path does not contain a catalog object
+     */
     public static Catalog load(String path) throws IOException, ClassNotFoundException {
         try (
                 ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path))
@@ -25,6 +40,15 @@ public class CatalogUtil {
         }
     }
 
+    /**
+     * Open the file pointed to by the document's "location" field.
+     *
+     * Opens in the browser if the file is an URI, or locally if it is not.
+     *
+     * @param doc the document to view
+     * @throws IOException the path was local, and was not a valid path
+     * @throws URISyntaxException the path was an invalid URI
+     */
     public static void view(Document doc) throws IOException, URISyntaxException {
         Desktop desktop = Desktop.getDesktop();
         boolean web = doc.getLocation().matches("[a-z]*://.*");
