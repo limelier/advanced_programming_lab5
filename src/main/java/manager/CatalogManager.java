@@ -11,5 +11,9 @@ public class CatalogManager {
         this.shell = new Shell();
     }
 
-
+    public void start() {
+        while (true) {
+            // TODO: manager loop
+        }
+    }
 }
