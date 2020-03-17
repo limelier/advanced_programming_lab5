@@ -1,9 +1,6 @@
 package main;
 
-import catalog.Catalog;
-import document.Document;
 import manager.CatalogManager;
-import util.CatalogUtil;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
