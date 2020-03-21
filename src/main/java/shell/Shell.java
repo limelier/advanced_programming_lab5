@@ -2,6 +2,7 @@ package shell;
 
 import catalog.Catalog;
 import exceptions.BadArgumentCountException;
+import shell.command.catalog.AddCommand;
 import shell.command.catalog.CatalogCommand;
 import shell.command.catalog.ViewCommand;
 import shell.command.init.InitCommand;
@@ -61,14 +62,20 @@ public class Shell {
                 case "?":
                     result = new Result(true,
                             "Available commands:\n" +
-                                    "quit: quit the application" +
-                                    "view <doc_id>: view a document");
+                                    "quit: quit the application\n" +
+                                    "view <doc_id>: view a document\n" +
+                                    "add <doc_id> <doc_name> <doc_path>\n: add a document with the given local or web path"
+                    );
                     break;
                 case "quit":
                     result = new Result(true, "Goodbye!");
                     return true;
                 case "view":
                     command = new ViewCommand(args);
+                    result = command.run(catalog);
+                    break;
+                case "add":
+                    command = new AddCommand(args);
                     result = command.run(catalog);
                     break;
                 default:
