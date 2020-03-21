@@ -17,7 +17,7 @@ public class CatalogManager {
                 catalog = shell.init();
                 shell.printCommandPrompt();
             } else {
-                if (shell.doCommand()) {
+                if (shell.doCommand(catalog)) {
                     break;
                 }
             }

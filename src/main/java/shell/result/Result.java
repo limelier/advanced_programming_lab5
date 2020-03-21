@@ -1,19 +1,12 @@
 package shell.result;
 
-public class Result<T> {
+public class Result {
     boolean successful;
     String message;
-    T contents;
 
-    public Result(String message) {
+    public Result(boolean successful, String message) {
+        this.successful = successful;
         this.message = message;
-        successful = false;
-    }
-
-    public Result(String message, T contents) {
-        this.message = message;
-        this.contents = contents;
-        successful = true;
     }
 
     public boolean ok() {
@@ -23,8 +16,4 @@ public class Result<T> {
     public String getMessage() {
         return message;
     };
-
-    public T getContents() {
-        return contents;
-    }
 }

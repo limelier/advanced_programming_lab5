@@ -65,6 +65,14 @@ public class CatalogUtil {
         }
     }
 
+    /**
+     * Create and save a new catalog.
+     *
+     * @param name the catalog's name
+     * @param path the path to save the catalog at
+     * @return the newly created catalog
+     * @throws IOException the path was invalid
+     */
     public static Catalog create(String name, String path) throws IOException {
         Catalog catalog = new Catalog(name, path);
         save(catalog);

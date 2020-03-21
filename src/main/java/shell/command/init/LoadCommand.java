@@ -2,7 +2,7 @@ package shell.command.init;
 
 import catalog.Catalog;
 import exceptions.BadArgumentCountException;
-import shell.result.Result;
+import shell.result.ContentResult;
 import util.CatalogUtil;
 
 import java.io.IOException;
@@ -16,16 +16,16 @@ public class LoadCommand extends InitCommand {
     }
 
     @Override
-    public Result<Catalog> getResult() {
-        Result<Catalog> result;
+    public ContentResult<Catalog> getResult() {
+        ContentResult<Catalog> result;
 
         String path = args[1];
 
         try {
             Catalog catalog = CatalogUtil.load(path);
-            result = new Result<>("Catalog " + catalog.getName() + " loaded successfully.", catalog);
+            result = new ContentResult<>("Catalog " + catalog.getName() + " loaded successfully.", catalog);
         } catch (IOException | ClassNotFoundException e) {
-            result = new Result<>("Failed to load catalog:\n" + e.toString());
+            result = new ContentResult<>("Failed to load catalog:\n" + e.toString());
         }
 
         return result;
