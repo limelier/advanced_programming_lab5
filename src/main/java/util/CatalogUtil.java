@@ -4,7 +4,10 @@ import catalog.Catalog;
 import document.Document;
 
 import java.awt.*;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -60,5 +63,11 @@ public class CatalogUtil {
         } else {
             desktop.open(new File(doc.getLocation()));
         }
+    }
+
+    public static Catalog create(String name, String path) throws IOException {
+        Catalog catalog = new Catalog(name, path);
+        save(catalog);
+        return catalog;
     }
 }

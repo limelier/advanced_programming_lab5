@@ -23,10 +23,8 @@ public class NewCommand extends InitCommand {
         String name = args[1];
         String path = args[2];
 
-        Catalog catalog = new Catalog(name, path);
-
         try {
-            CatalogUtil.save(catalog);
+            Catalog catalog = CatalogUtil.create(name, path);
             result = new Result<>("Catalog " + name + " created successfully.", catalog);
         } catch (IOException e) {
             result = new Result<>("Failed to create catalog:\n" + e);
