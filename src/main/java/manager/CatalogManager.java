@@ -13,7 +13,11 @@ public class CatalogManager {
 
     public void start() {
         while (true) {
-            // TODO: manager loop
+            if (catalog == null) {
+                catalog = shell.init();
+            } else {
+                break;
+            }
         }
     }
 }

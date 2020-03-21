@@ -7,6 +7,8 @@ import java.awt.*;
 import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class CatalogUtil {
 
@@ -18,7 +20,7 @@ public class CatalogUtil {
      */
     public static void save(Catalog catalog) throws IOException {
         try (
-                ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(catalog.getPath()))
+                ObjectOutputStream oos = new ObjectOutputStream(Files.newOutputStream(Paths.get(catalog.getPath())))
         ) {
             oos.writeObject(catalog);
         }
@@ -29,12 +31,12 @@ public class CatalogUtil {
      *
      * @param path the path to the serialized catalog object
      * @return the loaded catalog
-     * @throws IOException the path is invalid
+     * @throws IOException            the path is invalid
      * @throws ClassNotFoundException the file at the path does not contain a catalog object
      */
     public static Catalog load(String path) throws IOException, ClassNotFoundException {
         try (
-                ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path))
+                ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(Paths.get(path)))
         ) {
             return (Catalog) ois.readObject();
         }
@@ -42,11 +44,11 @@ public class CatalogUtil {
 
     /**
      * Open the file pointed to by the document's "location" field.
-     *
+     * <p>
      * Opens in the browser if the file is an URI, or locally if it is not.
      *
      * @param doc the document to view
-     * @throws IOException the path was local, and was not a valid path
+     * @throws IOException        the path was local, and was not a valid path
      * @throws URISyntaxException the path was an invalid URI
      */
     public static void view(Document doc) throws IOException, URISyntaxException {
