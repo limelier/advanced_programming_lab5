@@ -4,6 +4,7 @@ import catalog.Catalog;
 import exceptions.BadArgumentCountException;
 import shell.command.catalog.AddCommand;
 import shell.command.catalog.CatalogCommand;
+import shell.command.catalog.SaveCommand;
 import shell.command.catalog.ViewCommand;
 import shell.command.init.InitCommand;
 import shell.command.init.LoadCommand;
@@ -64,7 +65,8 @@ public class Shell {
                             "Available commands:\n" +
                                     "quit: quit the application\n" +
                                     "view <doc_id>: view a document\n" +
-                                    "add <doc_id> <doc_name> <doc_path>\n: add a document with the given local or web path"
+                                    "add <doc_id> <doc_name> <doc_path>: add a document with the given local or web path\n" +
+                                    "save: save the changes you've made to the catalog"
                     );
                     break;
                 case "quit":
@@ -76,6 +78,10 @@ public class Shell {
                     break;
                 case "add":
                     command = new AddCommand(args);
+                    result = command.run(catalog);
+                    break;
+                case "save":
+                    command = new SaveCommand(args);
                     result = command.run(catalog);
                     break;
                 default:
