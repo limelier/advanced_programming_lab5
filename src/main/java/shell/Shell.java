@@ -42,4 +42,30 @@ public class Shell {
         System.out.println(result.getMessage());
         return result.getContents();
     }
+
+    /**
+     * Get a command from stdin, and execute it.
+     *
+     * @return true if the command ran was "quit"
+     */
+    public boolean doCommand() {
+        String[] args = readArgs();
+        InitCommand command;
+
+        if (args[0].equals("?")) {
+            System.out.println("The available commands are:");
+            System.out.println("quit: quits the program"); // todo
+        } else if (args[0].equals("quit")) {
+            System.out.println("Quitting application, goodbye!");
+            return true;
+        } else {
+            System.out.println("Bad command. Use '?' to see available commands.");
+        }
+
+        return false;
+    }
+
+    public void printCommandPrompt() {
+        System.out.println("Input commands, or use '?' to get available commands.");
+    }
 }

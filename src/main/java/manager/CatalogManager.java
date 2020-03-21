@@ -15,8 +15,11 @@ public class CatalogManager {
         while (true) {
             if (catalog == null) {
                 catalog = shell.init();
+                shell.printCommandPrompt();
             } else {
-                break;
+                if (shell.doCommand()) {
+                    break;
+                }
             }
         }
     }
