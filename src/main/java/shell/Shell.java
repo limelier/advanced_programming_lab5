@@ -95,8 +95,4 @@ public class Shell {
         System.out.println(result.getMessage());
         return false;
     }
-
-    public void printCommandPrompt() {
-        System.out.println("Input commands, or use '?' to get available commands.");
-    }
 }
