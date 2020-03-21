@@ -27,9 +27,9 @@ public class NewCommand extends InitCommand {
 
         try {
             CatalogUtil.save(catalog);
-            result = new Result<Catalog>("Catalog " + name + " created successfully.", catalog);
+            result = new Result<>("Catalog " + name + " created successfully.", catalog);
         } catch (IOException e) {
-            result = new Result<Catalog>("Failed to create catalog:\n" + e);
+            result = new Result<>("Failed to create catalog:\n" + e);
         }
 
         return result;
