@@ -1,17 +1,19 @@
 package util;
 
 import catalog.Catalog;
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.stream.JsonReader;
 import document.Document;
+import exceptions.InvalidCatalogException;
 
 import java.awt.*;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.StringJoiner;
 
 public class CatalogUtil {
@@ -23,10 +25,10 @@ public class CatalogUtil {
      * @throws IOException the catalog's path was invalid
      */
     public static void save(Catalog catalog) throws IOException {
-        try (
-                ObjectOutputStream oos = new ObjectOutputStream(Files.newOutputStream(Paths.get(catalog.getPath())))
-        ) {
-            oos.writeObject(catalog);
+        try (FileWriter writer = new FileWriter(catalog.getPath())) {
+            Gson gson = new Gson();
+            String json = gson.toJson(catalog);
+            writer.write(json);
         }
     }
 
@@ -36,14 +38,15 @@ public class CatalogUtil {
      * @param path the path to the serialized catalog object
      * @return the loaded catalog
      * @throws IOException            the path is invalid
-     * @throws ClassNotFoundException the file at the path does not contain a catalog object
      */
-    public static Catalog load(String path) throws IOException, ClassNotFoundException {
-        try (
-                ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(Paths.get(path)))
-        ) {
-            return (Catalog) ois.readObject();
+    public static Catalog load(String path) throws IOException, InvalidCatalogException {
+        try (JsonReader reader = new JsonReader(new FileReader(path))) {
+            Gson gson = new Gson();
+            return gson.fromJson(reader, Catalog.class);
+        } catch (JsonSyntaxException e) {
+            throw new InvalidCatalogException();
         }
+
     }
 
     /**
