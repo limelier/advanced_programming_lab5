@@ -14,6 +14,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.StringJoiner;
 
 public class CatalogUtil {
@@ -96,5 +100,23 @@ public class CatalogUtil {
             stringJoiner.add(String.format("%s - '%s' (%s)", doc.getId(), doc.getName(), doc.getLocation()));
         }
         return stringJoiner.toString();
+    }
+
+    private Map<String, Object> buildDataModel(Catalog catalog) {
+        Map<String, Object> model = new HashMap<>();
+        model.put("name", catalog.getName());
+        model.put("path", catalog.getPath());
+
+        List<Map<String, Object>> docs = new ArrayList<>();
+        for (Document document : catalog.getDocuments()) {
+            Map<String, Object> doc = new HashMap<>();
+            doc.put("id", document.getId());
+            doc.put("name", document.getName());
+            doc.put("location", document.getLocation());
+            docs.add(doc);
+        }
+
+        model.put("docs", docs);
+        return model;
     }
 }
