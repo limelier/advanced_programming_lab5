@@ -6,14 +6,19 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.JsonReader;
 import document.Document;
 import exceptions.InvalidCatalogException;
+import freemarker.Config;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
 
 import java.awt.*;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.StringJoiner;
 
 public class CatalogUtil {
@@ -96,5 +101,42 @@ public class CatalogUtil {
             stringJoiner.add(String.format("%s - '%s' (%s)", doc.getId(), doc.getName(), doc.getLocation()));
         }
         return stringJoiner.toString();
+    }
+
+    private static Map<String, Object> buildDataModel(Catalog catalog) {
+        Map<String, Object> model = new HashMap<>();
+        model.put("name", catalog.getName());
+        model.put("path", catalog.getPath());
+
+        List<Map<String, Object>> docs = new ArrayList<>();
+        for (Document document : catalog.getDocuments()) {
+            Map<String, Object> doc = new HashMap<>();
+            doc.put("id", document.getId());
+            doc.put("name", document.getName());
+            doc.put("location", document.getLocation());
+            docs.add(doc);
+        }
+
+        model.put("docs", docs);
+        return model;
+    }
+
+    /**
+     * Create an HTML report of the catalog at the given path, then open the file.
+     *
+     * @param catalog the catalog to report about
+     * @param path the path to create the HTML file at
+     * @throws IOException the template was not found or the file could not be created
+     * @throws TemplateException the template has problems
+     */
+    public static void report(Catalog catalog, String path) throws TemplateException, IOException {
+        Map<String, Object> model = buildDataModel(catalog);
+        Configuration cfg = Config.get();
+        Template template = cfg.getTemplate("report.ftlh");
+        Writer out = new FileWriter(path);
+        template.process(model, out);
+
+        Desktop desktop = Desktop.getDesktop();
+        desktop.open(new File(path));
     }
 }
