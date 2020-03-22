@@ -28,4 +28,8 @@ public class Document implements Serializable {
     public String getLocation() {
         return location;
     }
+
+    public String getName() {
+        return name;
+    }
 }

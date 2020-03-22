@@ -3,7 +3,9 @@ package catalog;
 import document.Document;
 
 import java.io.Serializable;
+import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Catalog implements Serializable {
@@ -27,5 +29,13 @@ public class Catalog implements Serializable {
 
     public String getPath() {
         return path;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<Document> getDocuments() {
+        return Collections.unmodifiableList(documents);
     }
 }
