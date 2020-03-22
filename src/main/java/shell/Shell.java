@@ -2,10 +2,7 @@ package shell;
 
 import catalog.Catalog;
 import exceptions.BadArgumentCountException;
-import shell.command.catalog.AddCommand;
-import shell.command.catalog.CatalogCommand;
-import shell.command.catalog.SaveCommand;
-import shell.command.catalog.ViewCommand;
+import shell.command.catalog.*;
 import shell.command.init.InitCommand;
 import shell.command.init.LoadCommand;
 import shell.command.init.NewCommand;
@@ -70,8 +67,11 @@ public class Shell {
                     );
                     break;
                 case "quit":
-                    result = new Result(true, "Goodbye!");
                     return true;
+                case "list":
+                    command = new ListCommand(args);
+                    result = command.run(catalog);
+                    break;
                 case "view":
                     command = new ViewCommand(args);
                     result = command.run(catalog);

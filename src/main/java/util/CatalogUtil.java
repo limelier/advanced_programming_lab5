@@ -12,6 +12,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.StringJoiner;
 
 public class CatalogUtil {
 
@@ -77,5 +78,20 @@ public class CatalogUtil {
         Catalog catalog = new Catalog(name, path);
         save(catalog);
         return catalog;
+    }
+
+    /**
+     * Returns a newline-separated list of the documents in a catalog: id, name and path.
+     *
+     * @param catalog the catalog to go through
+     * @return the list of documents
+     */
+    public static String list(Catalog catalog) {
+        if (catalog == null) throw new IllegalArgumentException();
+        StringJoiner stringJoiner = new StringJoiner("\n");
+        for (Document doc : catalog.getDocuments()) {
+            stringJoiner.add(String.format("%s - '%s' (%s)", doc.getId(), doc.getName(), doc.getLocation()));
+        }
+        return stringJoiner.toString();
     }
 }
