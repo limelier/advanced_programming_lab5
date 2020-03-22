@@ -4,6 +4,7 @@ import catalog.Catalog;
 import document.Document;
 import exceptions.BadArgumentCountException;
 import exceptions.DuplicateDocumentIdException;
+import exceptions.InvalidDocumentLocationException;
 import shell.result.Result;
 
 public class AddCommand extends CatalogCommand {
@@ -19,7 +20,12 @@ public class AddCommand extends CatalogCommand {
         String id = args[1];
         String name = args[2];
         String path = args[3];
-        Document document = new Document(id, name, path);
+        Document document;
+        try {
+            document = new Document(id, name, path);
+        } catch (InvalidDocumentLocationException e) {
+            return new Result(false, e.getMessage());
+        }
         try {
             catalog.add(document);
             return new Result(true, "Added document '" + name + "' to catalog, at ID '" + id + "'.");

@@ -1,6 +1,10 @@
 package document;
 
+import exceptions.InvalidDocumentLocationException;
+
 import java.io.Serializable;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,9 +14,14 @@ public class Document implements Serializable {
     private String location;
     Map<String, Object> tags;
 
-    public Document(String id, String name, String location) {
+    public Document(String id, String name, String location) throws InvalidDocumentLocationException {
         this.id = id;
         this.name = name;
+        try {
+            new URI(location);
+        } catch (URISyntaxException e) {
+            throw new InvalidDocumentLocationException(location);
+        }
         this.location = location;
         tags = new HashMap<>();
     }
