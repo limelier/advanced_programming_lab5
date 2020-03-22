@@ -3,11 +3,6 @@ package freemarker;
 import freemarker.template.Configuration;
 import freemarker.template.TemplateExceptionHandler;
 
-import java.io.File;
-import java.io.IOException;
-
-import static java.lang.System.exit;
-
 public class Config {
     static Configuration cfg = null;
 
@@ -21,13 +16,7 @@ public class Config {
 
         cfg = new Configuration(Configuration.VERSION_2_3_0);
 
-        try {
-            cfg.setDirectoryForTemplateLoading(new File("../../templates/"));
-        } catch (IOException e) {
-            System.err.println("Cannot find freemarker template.");
-            e.printStackTrace();
-            exit(-1);
-        }
+        cfg.setClassForTemplateLoading(Config.class, "/templates");
 
         // recommended default settings, https://freemarker.apache.org/docs/pgui_quickstart_createconfiguration.html
         cfg.setDefaultEncoding("UTF-8");

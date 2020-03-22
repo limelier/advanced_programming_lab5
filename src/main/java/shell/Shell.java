@@ -63,7 +63,8 @@ public class Shell {
                                     "quit: quit the application\n" +
                                     "view <doc_id>: view a document\n" +
                                     "add <doc_id> <doc_name> <doc_path>: add a document with the given local or web path\n" +
-                                    "save: save the changes you've made to the catalog"
+                                    "save: save the changes you've made to the catalog\n" +
+                                    "list: list the documents in the "
                     );
                     break;
                 case "quit":
@@ -82,6 +83,10 @@ public class Shell {
                     break;
                 case "save":
                     command = new SaveCommand(args);
+                    result = command.run(catalog);
+                    break;
+                case "report":
+                    command = new ReportCommand(args);
                     result = command.run(catalog);
                     break;
                 default:

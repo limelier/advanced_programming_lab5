@@ -121,11 +121,22 @@ public class CatalogUtil {
         return model;
     }
 
-    public static void report(Catalog catalog) throws IOException, TemplateException {
+    /**
+     * Create an HTML report of the catalog at the given path, then open the file.
+     *
+     * @param catalog the catalog to report about
+     * @param path the path to create the HTML file at
+     * @throws IOException the template was not found or the file could not be created
+     * @throws TemplateException the template has problems
+     */
+    public static void report(Catalog catalog, String path) throws TemplateException, IOException {
         Map<String, Object> model = buildDataModel(catalog);
         Configuration cfg = Config.get();
         Template template = cfg.getTemplate("report.ftlh");
-        Writer out = new OutputStreamWriter(System.out);
+        Writer out = new FileWriter(path);
         template.process(model, out);
+
+        Desktop desktop = Desktop.getDesktop();
+        desktop.open(new File(path));
     }
 }
