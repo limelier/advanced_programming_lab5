@@ -1,6 +1,7 @@
 package catalog;
 
 import document.Document;
+import exceptions.DuplicateDocumentIdException;
 
 import java.io.Serializable;
 import java.nio.file.Path;
@@ -19,8 +20,12 @@ public class Catalog implements Serializable {
         documents = new ArrayList<>();
     }
 
-    public void add(Document doc) {
-        documents.add(doc);
+    public void add(Document doc) throws DuplicateDocumentIdException {
+        if (findById(doc.getId()) == null) {
+            documents.add(doc);
+        } else {
+            throw new DuplicateDocumentIdException(doc.getId());
+        }
     }
 
     public Document findById(String id) {

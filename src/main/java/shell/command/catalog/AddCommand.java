@@ -3,6 +3,7 @@ package shell.command.catalog;
 import catalog.Catalog;
 import document.Document;
 import exceptions.BadArgumentCountException;
+import exceptions.DuplicateDocumentIdException;
 import shell.result.Result;
 
 public class AddCommand extends CatalogCommand {
@@ -19,8 +20,12 @@ public class AddCommand extends CatalogCommand {
         String name = args[2];
         String path = args[3];
         Document document = new Document(id, name, path);
-        catalog.add(document);
+        try {
+            catalog.add(document);
+            return new Result(true, "Added document '" + name + "' to catalog, at ID '" + id + "'.");
+        } catch (DuplicateDocumentIdException e) {
+            return new Result(false, e.getMessage());
+        }
 
-        return new Result(true, "Added document '" + name + "' to catalog, at ID '" + id + "'.");
     }
 }
