@@ -22,7 +22,7 @@ public class Config {
         cfg = new Configuration(Configuration.VERSION_2_3_0);
 
         try {
-            cfg.setDirectoryForTemplateLoading(new File("../../templates"));
+            cfg.setDirectoryForTemplateLoading(new File("../../templates/"));
         } catch (IOException e) {
             System.err.println("Cannot find freemarker template.");
             e.printStackTrace();

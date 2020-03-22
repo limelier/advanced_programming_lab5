@@ -6,12 +6,13 @@ import com.google.gson.JsonSyntaxException;
 import com.google.gson.stream.JsonReader;
 import document.Document;
 import exceptions.InvalidCatalogException;
+import freemarker.Config;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
 
 import java.awt.*;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -102,7 +103,7 @@ public class CatalogUtil {
         return stringJoiner.toString();
     }
 
-    private Map<String, Object> buildDataModel(Catalog catalog) {
+    private static Map<String, Object> buildDataModel(Catalog catalog) {
         Map<String, Object> model = new HashMap<>();
         model.put("name", catalog.getName());
         model.put("path", catalog.getPath());
@@ -118,5 +119,13 @@ public class CatalogUtil {
 
         model.put("docs", docs);
         return model;
+    }
+
+    public static void report(Catalog catalog) throws IOException, TemplateException {
+        Map<String, Object> model = buildDataModel(catalog);
+        Configuration cfg = Config.get();
+        Template template = cfg.getTemplate("report.ftlh");
+        Writer out = new OutputStreamWriter(System.out);
+        template.process(model, out);
     }
 }
